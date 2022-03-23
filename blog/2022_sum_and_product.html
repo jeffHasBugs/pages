@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Sum and product of roots </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="stylesheet.css" type="text/css">
+    </head>
+    <body>
+        <header> 
+            <a href="/blog/index.html">[ Blog ]</a>
+        </header>
+
+        <h1> Sum and product of roots </h1>
+        <p> 23/03/2022 </p>
+        <p> In this post I tried to come up with an intuitive explanation for why, given the quadratic equation ax^2 + bx + c = 0,
+        the sum of the roots of the equation is -b/a, and the product of the roots is c/a. </p>
+
+
+        <p>I spent more time than was necessary in attempting to write a clear explanation for my thought 
+        processes. The explanation is not clear, nor concise, but I'm posting it here anyways because 
+        I'm quite proud that I could even come up with an explanation. </p>
+
+        <h3> <strong>Why is the sum of two roots of a quadratic equation (-b/a) and the product (c/a)?</strong> </h3>
+        <p>
+	a. Example x^2 - 18x + 81=0 ; RootA+RootB = -(-18/1) , RootA*RootB = 81/1 ;
+        <br>
+	b. Example 5x^2 - 9x + 4=0 ; RootA+RootB = -(-9/5) , RootA*RootB = 4/5 ;
+        </p>
+
+        <p>
+	Observing from the examples: 
+        In a, the equation can be simplified (x-9)(x-9) = 0 , where x=9. We observe that the
+	coefficient of x is simply the sum of the roots.
+        </p>
+
+        <p>
+	But wait! In b, the equation can be simplified (5x - 4)(x - 1) = 0, where x = 4/5, but the coefficient
+        of x is -9. It now seems that the coefficient of x is not just the sum of constants in the simplified equation.
+        </p>
+
+        <h4> Explanation </h4>
+        <p>
+	For any equation (mx - c)(nx - d) = 0, x= c/m <strong>or</strong> x= d/n. 
+	The coefficient of x^2 is the product of the coefficients of x in the simplified equation.
+	The coefficient of x in the expanded quadratic equation is cn + dm. Taking  cn/nm + dm/nm,
+        we obtain c/m + d/n, or the sum of the roots, b/a!
+        </p>
+
+        <p>
+	Why negate b/a (multiply b/a with -1)? When (yx-a = 0), x=a/y , but the coefficient of x is derived from -a.
+        In other words, the sign of true root of the quadratic equation is almost always opposite to the sign of a.
+        </p>
+
+        <p>
+	For (mx - c)(nx + d) = 0, the coefficient of x^0 in the quadratic equation is (-c*d). The 
+        roots c/m and -d/n.  The same principles apply to c/a. Taking the coefficient of x^0, 
+        (-c*d) / mn = -c*d/m/n.
+        </p>
+
+        <p>
+	This multiplication of roots turns negative if the constants have different signs. It does
+	not discriminate between the individual sign of constants c and d. Negation is not needed.
+        </p>
+
+    </body>
+</html>

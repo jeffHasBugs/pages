@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Using application sound as audio input with Pulseaudio modules </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="stylesheet.css" type="text/css">
+    </head>
+    <body>
+        <header> 
+            <a href="/blog/index.html">[ Blog ]</a>
+        </header>
+
+        <h1> Using application sound as audio input with Pulseaudio modules </h1>
+        <p> 11/09/2021 </p>
+        <p> 
+            There's already a good <a href="https://huma.id/blog/pulseaudio-loopback/">guide</a> 
+            on how to do this, on top of the well-written pulseaudio docs: 
+            <a href="https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/">
+                https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/ 
+            </a>
+        </p>
+        <h2>Introduction</h2>
+        <p> 
+            In Pulseaudio, <code>sinks</code> (e.g. a speaker) take input from an application's 
+            <code>sink-input</code> and outputs them. <code>Sources</code>  (e.g. a microphone) 
+            capture sound and pipes them to an application's <code>source-output</code>. 
+        </p>
+            We need to capture the application's audio to use it as a 
+            virtual audio input. Pulseaudio already does most of the work for us: 
+            every sink in Pulseaudio is paired with a corresponding "monitor", a   
+            source, that plays back whatever is piped into the sink.
+        </p>
+        <p>
+            By default, all <code>sink-input</code>s pipe to a default sink. 
+            The simplest way to use an application's audio output as an audio 
+            source would be to use the default sink's monitor (e.g. "Monitor of 
+            built-in analog audio").
+        </p>
+        <h2>Creating a null sink</h2>
+        <p>
+            In this case, however, using the default sink - the sink your speaker 
+            uses - would mean also sharing whatever else you're playing on it, 
+            when all we want is to share a single audio stream. Cue Pulseaudio's 
+            modules. First, with pactl, load a new 
+            <a href="https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#module-combine-sink">null sink</a>.
+        </p>
+        <p>
+            <code>pactl load-module module-null-sink sink_name="sink_reroute"</code>
+        </p>
+        <h2> Moving our input </h2>
+        <p>
+            Data piped to null sinks are automatically dropped. Now we will reattach 
+            our application's sink input to the null sink we just created. We can then 
+            redirect the audio elsewhere using the sink's monitor as an audio source. 
+            To find the sink input, use:
+        </p>
+        <p>
+            <code>pactl list sink-inputs</code>
+        </p>
+        <p>
+            Take note of the sink input's index number (look for lines starting with 
+            "Sink Input #xxx") and the name of the null sink you created just now.   
+            Here we assume the sink input's index number is 155. To move the sink input:
+        </p>
+        <p>
+            <code>pactl move-sink-input 155 sink_reroute</code>
+        </p>
+        <p>
+            Finally, find the monitor of the null sink (e.g. "Monitor of sink_reroute") 
+            and set it as your audio input device.
+        
+        <p>
+            You should no longer be able to hear sound coming out from the 
+            application: it's piping it's audio to the null sink instead. 
+        </p>
+        <h2> Creating a combine sink </h2>
+        <p>
+            In many cases we would still wish to hear sound. To do so, We can 
+            create a new combine-sink. A combine-sink duplicates everything piped  
+            to it to it's "slave" sinks, in this case the null and default sinks:
+        </p>
+        <p>
+            <code>pactl load-module module-combine-sink sink_name="sink_combine" slaves=@DEFAULT_SINK@,sink_reroute</code>
+        </p>
+        <p>
+            Now we move our sink input to the combine-sink and we're good to go.  
+            Assuming the sink input's index is 155:
+        </p>
+        <p>
+            <code>pactl move-sink-input 155 sink_combine</code>
+        </p>
+        <p>
+            (The combine sink is a sink too, so it should have a corresponding monitor! 
+             You can also use the combine sink's monitor as an audio source and remove 
+             the need for a null sink.)
+        </p>
+    </body>
+</html>
