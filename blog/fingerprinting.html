@@ -15,19 +15,20 @@
         <p> 27/05/2022 </p>
         <p> There is a config, privacy.resistFingerprinting in Firefox that tries to thwart attempts by websites to fingerprint the browser. </p>
 
-        <p> On the surface, resistFingerprinting seems useful. It tries to
-        prevent websites from fingerprinting the browser by observing how your browser renders the canvas image. It reduces time 
-        precision on Javascript. It spoofs time zone, locale, keyboard layout, and user agent. [1] </p>
+        <p> On the surface, resistFingerprinting seems useful. It tries to prevent websites from fingerprinting the browser by 
+        observing how your browser renders the canvas image. It reduces time precision on Javascript. It spoofs time zone, 
+        locale, keyboard layout, and user agent. [1] </p>
 
         <p> The purpose is to make your browser look the same as everyone else's to websites (really, corporations) so that they
         cannot connect you to your past browsing habits whenever you visit a website. All seems proper, until you remember that 
         you cannot send the website an IP address that you do not have access to (how will the website send you data?), which
         means most of the time you are revealing your true location. Hiding your true IP address is tedious. </p>
 
-        <p> Websites can also guess your browser version by testing for the latest web standard features and also by quirks of your Javascript 
-        engine [2], making the fact that you're lying about your browser version a sudden, obvious pain in the butt. </p>
+        <p> Websites can also guess your browser version by testing for certain new features and also by known differences of 
+        Javascript engines between browsers [2], making the fact that you're lying about your browser version a sudden, 
+        obvious pain in the butt. </p>
 
-        <p> This post only talked about Firefox's resistFingerprinting, but many other browsers that try to evade fingerprinting do it the same 
+        <p> We only talk about Firefox's resistFingerprinting, but many other browsers that try to evade fingerprinting do it the same 
         way, with the same flaws. When trying to evade fingerprinting hurts your browsing experience or consumes too much of your time, 
         with suboptimal results, it is not worth it. </p>
 
@@ -36,18 +37,18 @@
         <a href="https://nmap.org/book/osdetect-methods.html">https://nmap.org/book/osdetect-methods.html</a>. </p>
 
         <p> And most importantly of all, fingerprinting techniques are constantly evolving all the time. Actively monitoring for new fingerprinting
-        techniques and making those findings useful to everyone is time consuming and mostly unrewarding.  If big corporations or powerful government 
+        techniques and making those findings useful to everyone is time consuming and mostly unrewarding. If big corporations or powerful government 
         agencies want to track you, they will. </p>
 
         <p> For everyday Internet usage at least, evading fingerprinting is a fruitless persuit. </p>
 
         <h2> Safer </h2>
         <p> All this isn't to say that no effort should be made at all. Extensions like <a href="https://ublockorigin.com/">ublock origin</a>
-        block code that websites run which slow down your browsing experience and wastes computing resources.
-        Extensions like <a href="https://noscript.net/">noscript</a> prevents unrecognized websites from running random Javascript code on your 
-        computer, reducing your likelihood of being compromised by as-yet-unknown software vulnerabilities. </p>
+        block code that websites run which slow down your browsing experience and wastes computing resources. Extensions like 
+        <a href="https://noscript.net/">noscript</a> prevents unrecognized websites from running Javascript code on your computer, reducing your 
+        likelihood of being compromised by as-yet-unknown software vulnerabilities. </p>
 
-        <p> All in all, mitigations above will make your browsing experience, if not private, at least safer and faster. </p>
+        <p> All in all, mitigations above will make your browsing experience, if not private, safer and faster. </p>
 
         <h2> Tor </h2>
         <p>The <a href="https://torproject.org">Tor Browser</a> is one of the best options for anonymous communication online. The browser 
