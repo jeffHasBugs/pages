@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Evading fingerprinting is not worth your time </title>
+        <title> Evading fingerprinting may not be worth your time </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="stylesheet.css" type="text/css">
@@ -11,58 +11,80 @@
             <a href="/blog/index.html">[ Blog ]</a>
         </header>
 
-        <h1> Evading fingerprinting is not worth your time </h1>
+        <h1> Evading fingerprinting may not be worth your time </h1>
         <p> 27/05/2022 </p>
-        <p> There is a config, privacy.resistFingerprinting in Firefox that tries to thwart attempts by websites to fingerprint the browser. </p>
+        <p> There is a privacy.resistFingerprinting setting in Firefox that tries to thwart attempts by websites to fingerprint the browser.
+        By, for example, preventing websites from automatically creating HTML canvas elements that can be used to unique identify your GPU 
+        (and also your device), and reporting the false time zone and locale. [1] </p>
 
-        <p> On the surface, resistFingerprinting seems useful. It tries to prevent websites from fingerprinting the browser by 
-        observing how your browser renders the canvas image. It reduces time precision on Javascript. It spoofs time zone, 
-        locale, keyboard layout, and user agent string. [1] </p>
+        <p> In theory, every user that turns on resistFingerprinting should look like they have the same browser configurations. Unique characteristics of a browser that, combined
+        together, can be used to reliably re-identify a browser, are eliminated. Advertisers cannot build a profile of the websites a specific browser has visited in the past. </p>
 
-        <p> The purpose is to make your browser look the same as everyone else's to websites (really, corporations) so that they
-        cannot connect you to your past browsing habits whenever you visit a website. All seems proper, until you remember that 
-        you cannot send the website an IP address that you do not have access to (how will the website send you data?), which
-        means most of the time you are revealing your true location. Hiding your true IP address is tedious. </p>
+        <p> resistFingerprinting alone is not enough to evade fingerprinting. There are many data points that do not rely on the configuration 
+        of the browser. Because of the complexity of modern browsers, websites can test for certain new features, for example a new Javascript
+        API, and components that are known to behave slightly differently between different browsers[2], to guess its browser, version, and
+        operating system. When combined with other data, resistFingerprinting becomes useless. </p>
 
-        <p> Websites can also guess your browser version by testing for certain new features and also by known differences of 
-        Javascript engines between browsers [2], making the fact that you're lying about your browser version a sudden, 
-        obvious pain in the butt. </p>
+        <p> As the saying goes, the security of a system is only as strong as its weakest link. Posessing one unique data point that websites
+        can use to identify you, and the game is up. </p>
 
-        <p> We only talk about Firefox's resistFingerprinting, but many other browsers that try to evade fingerprinting do it the same 
-        way, with the same flaws. When trying to evade fingerprinting hurts your browsing experience or consumes too much of your time, 
-        with suboptimal results, it is not worth it. </p>
+        <p> For example, you cannot send the website an IP address that you do not have access to, websites won't know where to send your data. 
+        IP addresses are assigned in such a way that users from the same region (or at least the same country) share some identical parts. They
+        belong to the same range. This information is all public record and anyone can look up which range belongs where. </p>
 
-        <p> One other notable thing is that your operating system may send/process network data in a specific pattern. TCP/IP implementations 
-        differ between operating systems. Websites can identify your operating system by exploiting this fact: 
-        <a href="https://nmap.org/book/osdetect-methods.html">https://nmap.org/book/osdetect-methods.html</a>. </p>
+        <p> This <i>one</i> data point can be eliminated by using an ideally popular and <i>trusted</i> VPN service, to not reveal your IP
+        address when communicating online. However, there is no denying that a VPN is often troublesome. The use of a VPN as a tool to 
+        eliminate that one data point becomes useless anyway when your browser consistently shares data like sign-in information with 
+        websites part of your everyday browsing routine. </p>
+
+        <p> The signed-in websites themselves can still connect your browser fingerprint to sign-in information such as cookies (or other shared 
+        persisting data) to create a long-term profile of how your browser's fingerprint changes over time. Those websites often embed code that 
+        run on other websites, whether because they provide a user analytics service or a "share button", which will enable them to build a 
+        profile of websites you've visited. [3] </p>
+
+        <p> And there are many other techniques that take advantage of the various subtle differences between devices. For example, all computers
+        you communicate with online may identify your operating system by taking advantage of how different operating systems send and process
+        network data with different patterns. (See <a href="https://nmap.org/book/osdetect-methods.html">https://nmap.org/book/osdetect-methods.html</a>)
+        </p>
 
         <p> And most importantly of all, fingerprinting techniques are constantly evolving all the time. Actively monitoring for new fingerprinting
-        techniques and making those findings useful to everyone is time consuming and mostly unrewarding. If big corporations or powerful government 
-        agencies want to track you, they will. </p>
-
-        <p> For everyday Internet usage at least, evading fingerprinting is a fruitless persuit. </p>
-
-        <h2> Safer </h2>
-        <p> All this isn't to say that no effort should be made at all. Extensions like <a href="https://ublockorigin.com/">ublock origin</a>
-        block code that websites run which slow down your browsing experience and wastes computing resources. Extensions like 
-        <a href="https://noscript.net/">noscript</a> prevents unrecognized websites from running Javascript code on your computer, reducing your 
-        likelihood of being compromised by as-yet-unknown software vulnerabilities. </p>
-
-        <p> All in all, mitigations above will make your browsing experience, if not private, safer and faster. </p>
+        techniques and making those findings useful to everyone is time consuming and unrewarding. If big corporations or powerful government agencies 
+        want to track you specifically, they will. The point being that if you are going to ends such as enabling resistFingerprinting and reading this
+        post, it is very likely you are putting a lot of effort into evading fingerprinting but getting suboptimal results.</p>
 
         <h2> Tor </h2>
-        <p>The <a href="https://torproject.org">Tor Browser</a> is one of the best options for anonymous communication online. The browser 
-        attempts to keep up with the latest fingerprinting methods and implement mitigations for them. Tor also makes your network activity harder 
-        to trace by redirecting network traffic across a global network of relays run by volunteers. The result is a resilient, private browsing 
-        experience that is hard to rival. </p>
+        <p>The <a href="https://torproject.org">Tor Browser</a> 
+        plugs most holes that may uniquely identify a user's computer, at the cost of convenience. If there is a new fingerprinting method, they
+        will implement mitigations for them. Tor also makes your network activity harder to trace by redirecting network traffic across a global 
+        network of relays run by volunteers. Tor is widely used, so websites cannot easily identify any single Tor user. </p>
 
-        <p> Note that Tor is not flawless and attacks by large threat actors are still possible. [3]</p>
+        <p> Tor is not flawless and attacks are still possible [4]. I believe that it is currently the best solution for anonimity online. 
+        You must read the Tor FAQ page first, in particular <a href="https://support.torproject.org/faq/staying-anonymous/"> this page on 
+        staying anonymous on tor</a> before getting started. </p>
 
-        <p> You should read the <a href="https://support.torproject.org/faq/">tor project FAQ</a> before getting started.</p>
+        <h2> Safer </h2>
+        <p> Extensions like <a href="https://ublockorigin.com/">ublock origin</a> block code that websites run to track your interactions and display 
+        ads but which slow down your browsing experience by using additional bandwidth and time. </p>
+
+        <p> Extensions like <a href="https://noscript.net/">noscript</a> prevents unrecognized websites from running Javascript code on your 
+        computer, reducing your likelihood of being compromised by as-yet-unknown software vulnerabilities. noscript is a useful tool to 
+        enhance security. If you're uncomfortable with blocking ads, you can always whitelist them. </p>
+        
+        <p> Lastly, disable WebGL. </p>
+
+        <p> Mitigations above will make your browsing experience safer and faster. </p>
+
+        <h2> Why write this? </h2>
+        <p> I used to be obsessed with evading fingerprinting and "outsmarting the trackers". I hope that people who are still in the same 
+        situation will realize that trying to evade fingerprinting <i>all on your own</i> is a time-consuming and unrewarding persuit. 
+        When you want anonimity, launch Tor. Keep all everyday browsing on a regular browser on the clearnet. If possible, delete your 
+        Facebook account. </p>
 
         <h4> Footnotes </h4>
         <p>[1] <a href="https://wiki.mozilla.org/Security/Fingerprinting">https://wiki.mozilla.org/Security/Fingerprinting</a></p>
         <p>[2] <a href="https://github.com/abrahamjuliot/creepjs">https://github.com/abrahamjuliot/creepjs</a></p>
-        <p>[3] <a href="https://github.com/Attacks-on-Tor/Attacks-on-Tor">https://github.com/Attacks-on-Tor/Attacks-on-Tor</a></p>
+        <p>[3] <i>What is off-facebook activity?</i> <br>
+        <a href="https://archive.is/rtZ9N"> https://archive.is/rtZ9N</a></p>
+        <p>[4] <a href="https://github.com/Attacks-on-Tor/Attacks-on-Tor">https://github.com/Attacks-on-Tor/Attacks-on-Tor</a></p>
     </body>
 </html>
